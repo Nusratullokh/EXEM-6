@@ -1,35 +1,26 @@
-import './App.scss'
-import { Routes, Route } from 'react-router-dom'
-import Home from './routes/home/Home'
-import Admin from './routes/admin/Admin'
-import Auth from './routes/auth/Auth'
-import Login from './routes/auth/login/Login'
-import Register from './routes/auth/register/Register'
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import './App.css'
 import Nav from './components/nav/Nav'
+import Home from './routes/home/Home'
+import { Routes, Route, useLocation } from 'react-router-dom'
+import SinglePage from './routes/single-page/SinglePage'
+import Cart from './routes/cart'
+import Login from './routes/auth/login/Login'
+import ScrollToTop from './components/scrollToTop'
 
 function App() {
+  const {pathname } = useLocation();
   return (
     <>
+       
+      <ScrollToTop pathname={pathname} />
       <Routes>
-        <Route element={<Nav/>}>
-        <Route path="" element={<Home />} />
-          <Route path="auth" element={<Auth />}>
-            <Route path='' element={<Login/>} />
-            <Route path='register' element={<Register/>} />
-          </Route>
-        </Route>
-        <Route path="admin" element={<Admin />} />
+        <Route path="/" element={<Home />} />
+        <Route path='/SinglePage/:id' element={<SinglePage />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/Login" element={<Login />} />
       </Routes>
-      <ToastContainer/>
     </>
   )
 }
 
 export default App
-
-
-// LOGIN
-// REGISTER
-// CONTEXT API

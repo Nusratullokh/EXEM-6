@@ -1,23 +1,40 @@
-import { useTranslation } from 'react-i18next'
-import i18n from '../../locales/i18next'
-import { Outlet } from 'react-router-dom'
+import React from 'react';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import logo from '../../images/logo.svg';
+import cart from '../../images/cart.svg';
+import { Link } from 'react-router-dom';
+import profile from '../../images/profile.svg';
+import './Nav.css';
 
 const Nav = () => {
+  const { t, i18n } = useTranslation();
+  const [language, setLanguage] = useState(i18n.language);
 
-    const data = useTranslation();
+  const changeLanguage = (lang) => {
+    i18n.changeLanguage(lang);
+    setLanguage(lang);
+  };
+
   return (
-    <div>
-        <select defaultValue={data.i18n.language} onChange={(e) => {
-           i18n.changeLanguage(e.target.value)
-        }}>
-            <option value="uz">UZBEK</option>
-            <option value="ru">RUSSIAN</option>
-            <option value="en">ENGLISH</option>
-            <option value="es">ESPANIOL</option>
+    <div className="container">
+      <nav>
+        <select className='selectLanguage' value={language} onChange={(e) => changeLanguage(e.target.value)}>
+          <option value="en">EN</option>
+          <option value="uz">UZ</option>
+          <option value="ru">RU</option>
+          <option value="tr">TR</option>
         </select>
-        <Outlet/>
+        <div className="nav__wrapper">
+          <ul>
+            <li><Link className='link' to={"/Login"}><img src={profile} alt="Profile" />{t('profile')}</Link></li>
+            <li><Link to={"/"}><img src={logo} alt="Logo" /></Link></li>
+            <li><Link to={"/cart"}><img src={cart} alt="Cart" /></Link></li>
+          </ul>
+        </div>
+      </nav>
     </div>
-  )
-}
+  );
+};
 
-export default Nav
+export default Nav;
